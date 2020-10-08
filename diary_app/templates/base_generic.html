@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+    {% block head %}
     <head>
         {% block title %}
             <title>{% if user %} {{user}}'s Diary {% else %} My diary {% endif %}</title>
@@ -13,6 +14,7 @@
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
         <script type="text/javascript" src ="{% static 'js/script.js' %}"></script>
     </head>
+    {% endblock %}
 
     <body>
         <div class="container-fluid">
