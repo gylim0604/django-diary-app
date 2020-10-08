@@ -1,0 +1,23 @@
+{% extends "base_generic.html" %}
+
+{% block scripts %}
+{{ block.super }}
+    <!-- Consider changing to tinymce 5 for placeholder text -->
+    <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+{% endblock %}
+
+{% block content %}
+    <h1>My Diary App</h1>
+    {% if user %} 
+        <h4>Hi {{user}}!</h4>
+    {% endif %}
+    <p>Welcome to your safe space. Write anything to your hearts content and let it all out.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <label for="title">Title</label> 
+        <input id="title" type="text" name="title">
+        <textarea id="content" name="content"></textarea>
+        <input type="submit" value="Submit" style="margin-top: 1.5%;">
+    </form>
+{% endblock %}
