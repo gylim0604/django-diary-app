@@ -1,6 +1,7 @@
 import datetime
 from django.shortcuts import render
 from diary_app.models import Entry
+from django.views import generic
 
 from diary_app.forms import EntryForm
 
@@ -18,7 +19,7 @@ def index(request):
                 entry_date=entry_date,
             )
             entry.save()
-            
+
     form = EntryForm()
     num_entries = Entry.objects.all().count()
 
@@ -28,3 +29,13 @@ def index(request):
     }
 
     return render(request, 'index.html', context=context)
+
+
+class EntryListView(generic.ListView):
+    model = Entry
+
+    def get_queryset(self):
+        return Entry.objects.all()[:5]
+
+class EntryDetailView(generic.DetailView):
+    model = Entry

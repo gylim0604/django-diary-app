@@ -1,0 +1,17 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Entry List</h1>
+    {% if entry_list %}
+        <ul>
+            {% for entry in entry_list %}
+                <li>
+                    <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no entries yet.. </p> 
+        <!-- add link to homepage -->
+    {% endif %}
+{% endblock %}
