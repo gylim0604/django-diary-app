@@ -2,6 +2,9 @@ import datetime
 from django.shortcuts import render
 from diary_app.models import Entry
 from django.views import generic
+from django.views.generic.edit import UpdateView
+from django.forms.models import modelform_factory
+from tinymce.widgets import TinyMCE
 
 from diary_app.forms import EntryForm
 
@@ -19,8 +22,9 @@ def index(request):
                 entry_date=entry_date,
             )
             entry.save()
-
-    form = EntryForm()
+    else:
+        form = EntryForm()
+    
     num_entries = Entry.objects.all().count()
 
     context = {
@@ -39,3 +43,8 @@ class EntryListView(generic.ListView):
 
 class EntryDetailView(generic.DetailView):
     model = Entry
+
+class EntryUpdateView(UpdateView):
+    model = Entry
+    form_class = EntryForm
+    template_name_suffix = '_update_form'
