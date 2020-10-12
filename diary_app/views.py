@@ -1,12 +1,18 @@
 import datetime
 from django.shortcuts import render
-from diary_app.models import Entry
 from django.views import generic
-from django.views.generic.edit import UpdateView
 from django.forms.models import modelform_factory
+from django.http import HttpResponse
+from django.utils.safestring import mark_safe
+
+
+#tinymce import
 from tinymce.widgets import TinyMCE
 
+# imports from this project
 from diary_app.forms import EntryForm
+from diary_app.models import *
+from diary_app.utils import Calendar
 
 def index(request):
     if request.method == 'POST':
@@ -34,7 +40,7 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
-
+# entry views
 class EntryListView(generic.ListView):
     model = Entry
 
@@ -44,7 +50,29 @@ class EntryListView(generic.ListView):
 class EntryDetailView(generic.DetailView):
     model = Entry
 
-class EntryUpdateView(UpdateView):
+class EntryUpdateView(generic.UpdateView):
     model = Entry
     form_class = EntryForm
     template_name_suffix = '_update_form'
+
+# calendar view
+class CalendarView(generic.ListView):
+    model = Entry
+    template_name = 'diary_app/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        d = get_date(self.request.GET.get('day',None))
+
+        cal = Calendar(d.year, d.month)
+
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.date.today()
