@@ -22,9 +22,9 @@ def index(request):
                 entry_date=entry_date,
             )
             entry.save()
-    else:
-        form = EntryForm()
-    
+            
+    # this should be outside so a new form will always be created
+    form = EntryForm()    
     num_entries = Entry.objects.all().count()
 
     context = {
