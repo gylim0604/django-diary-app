@@ -14,10 +14,11 @@ class Calendar(HTMLCalendar):
         entries_per_day = entries.filter(entry_date__day = day)
         d = ''
         for entry in entries_per_day:
-            d += f'<li><a href="{ entry.get_absolute_url() }">{entry.title}</a></li>'
+            title = entry.title if len(entry.title) < 30 else entry.title[:27] + "..."
+            d += f'<li>{title}</li>'
         
         if day != 0:
-            return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
+            return f'<td> <a href=""> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
         return '<td></td>'
     
     # format the week in a table row

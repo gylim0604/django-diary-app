@@ -27,11 +27,6 @@
   padding: 20px 0px 0px 5px;
 }
 
-.calendar td a{
-  display: block;
-  width: 100%;
-}
-
 .month {
   font-size: 25px;
 }
@@ -45,8 +40,9 @@ ul {
   padding: 0px 5px 0px 20px;
 }
 
-a {
-  color: #17a2b8;
+.calendar a {
+  color: grey;
+  text-decoration: none !important;
 }
 
 

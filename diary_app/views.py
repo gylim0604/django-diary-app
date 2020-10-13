@@ -15,6 +15,7 @@ from diary_app.forms import EntryForm
 from diary_app.models import *
 from diary_app.utils import Calendar
 
+
 def index(request):
     # handle POST request
     if request.method == 'POST':
@@ -24,7 +25,8 @@ def index(request):
             print(form.cleaned_data.get('content'))
             title = form.cleaned_data['title']
             content = form.cleaned_data.get('content')
-            entry_date = datetime.date.today()
+            #timezone to be stored in utc so should'nt change it here. instead should change when displaying
+            entry_date = datetime.datetime.now()
             entry = Entry.objects.create(
                 title=title,
                 content=content,
@@ -48,7 +50,7 @@ class EntryListView(generic.ListView):
     model = Entry
 
     def get_queryset(self):
-        return Entry.objects.all()[:5]
+        return Entry.objects.all()[:10]
 
 class EntryDetailView(generic.DetailView):
     model = Entry
