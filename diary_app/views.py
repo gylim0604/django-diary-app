@@ -49,18 +49,6 @@ def index(request):
 class EntryListView(generic.ListView):
     model = Entry
 
-    def get_queryset(self, **kwargs):
-        #gets the date arguement, check if it exist, and filter the view if it exists
-        date= self.request.GET.get('date', None)
-        # check if there was a date arguement (date should be in ISO format yyyy-mm-dd)
-        if date != None:
-            return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
-        else:
-            return Entry.objects.all().order_by('-entry_date')[:10]
-
-class EntryListDateView(generic.ListView):
-    model = Entry
-
     def get_queryset(self):
         date = self.kwargs['date']
         #gets the date arguement, check if it exist, and filter the view if it exists
@@ -68,6 +56,24 @@ class EntryListDateView(generic.ListView):
             return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
         else:
             return Entry.objects.all().order_by('-entry_date')[:10]
+
+# class EntryListDateView(generic.ListView):
+#     model = Entry
+
+#     def get_queryset(self):
+#         date = self.kwargs['date']
+#         #gets the date arguement, check if it exist, and filter the view if it exists
+#         if date != None:
+#             return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
+#         else:
+#             return Entry.objects.all().order_by('-entry_date')[:10]
+
+
+class EntryCreateView(generic.CreateView):
+    model = Entry
+    form_class = EntryForm
+    template_name_suffix = '_create_form'
+
         
 class EntryDetailView(generic.DetailView):
     model = Entry

@@ -1,0 +1,31 @@
+{% extends "base_generic.html" %}
+
+{% block head %}
+    {{ block.super}}
+    {{ form.media }}
+{% endblock %}
+
+
+{% block content %}
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-9">
+                    <label for="{{ form.title.id_for_lable}}"><strong>Title</strong></label><br>
+                    {{ form.title }}
+                </div>
+                <div class="col-sm-3">
+                    <br>
+                    <label for="{{ form.entry_date.id_for_lable }}">Date: </label>
+                    {{ form.entry_date }}
+                </div>
+            </div>            
+        </div>
+
+        <div class="form-group">
+            {{form.content}}
+        </div>
+        <input type="submit" value= "Submit">
+    </form>
+{% endblock %}

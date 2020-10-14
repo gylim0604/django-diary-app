@@ -23,7 +23,7 @@ class Calendar(HTMLCalendar):
         s += "-%02d" %(day)
 
         if day != 0:
-            return '<td> <a href="%s"> <span class="date">%s</span> <ul>%s </ul> </a> </td>'% ( reverse('entry-date', args={s}) ,day,d)
+            return f'<td> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
         return '<td></td>'
     
     # format the week in a table row
