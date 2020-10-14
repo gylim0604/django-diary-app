@@ -1,10 +1,13 @@
 import datetime
 import calendar
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 from django.views import generic
 from django.forms.models import modelform_factory
 from django.http import HttpResponse
 from django.utils.safestring import mark_safe
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.forms import UserCreationForm
 
 
 #tinymce import
@@ -44,6 +47,28 @@ def index(request):
     }
 
     return render(request, 'index.html', context=context)
+
+def signup(request):
+    #if user is signed in
+    if request.user.is_authenticated:
+        return redirect("/")
+    # if is a post request
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        # if valid form is provided
+        if form.is_valid():
+            form.save()
+            username= form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            #log user in and redirect to index
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return redirect('/')
+        else:
+            return render(request, 'auth/signup.html', {'form': form})
+    else:
+        form = UserCreationForm()
+        return render(request, 'auth/signup.html', {'form':form})
 
 # entry views
 class EntryListView(generic.ListView):

@@ -25,6 +25,13 @@
                             <li><a href="{% url 'index' %}">Home</a></li>
                             <li><a href="">All entries</a></li>
                             <li><a href="{% url 'calendar' %}">Calendar</a></li>
+
+                            {% if user.is_authenticated %}
+                                <br><hr>
+                                <li>Hi {{ user.username }}</li>
+                            {% else %}
+                                <li>Login</li>
+                            {% endif %}
                         </ul>
                     {% endblock %}
                 </div>
