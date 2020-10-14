@@ -1,3 +1,5 @@
+from django.urls import reverse
+
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from .models import Entry
@@ -10,22 +12,25 @@ class Calendar(HTMLCalendar):
         super(Calendar, self).__init__()
 
     # formats entries of a day into a table 
-    def formatday(self, day, entries):
+    def formatday(self, s, day, entries):
         entries_per_day = entries.filter(entry_date__day = day)
         d = ''
         for entry in entries_per_day:
             title = entry.title if len(entry.title) < 30 else entry.title[:27] + "..."
             d += f'<li>{title}</li>'
-        
+
+        # format string to contain leading zero if less than 2 digits   
+        s += "-%02d" %(day)
+
         if day != 0:
-            return f'<td> <a href=""> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
+            return '<td> <a href="%s"> <span class="date">%s</span> <ul>%s </ul> </a> </td>'% ( reverse('entry-date', args={s}) ,day,d)
         return '<td></td>'
     
     # format the week in a table row
-    def formatweek(self, theweek, entries):
+    def formatweek(self, s, theweek, entries):
         week = ''
         for d, weekday in theweek:
-            week += self.formatday(d, entries)
+            week += self.formatday(s,d, entries)
         return f'<tr> {week} </tr>'
     
     def formatmonth(self, withyear=True):
@@ -35,5 +40,6 @@ class Calendar(HTMLCalendar):
         cal += f'{self.formatweekheader()}\n'
 
         for week in self.monthdays2calendar(self.year,self.month):
-            cal += f'{self.formatweek(week, entries)}\n'
+            s = str(self.year) + "-" + str(self.month)
+            cal += f'{self.formatweek(s,week, entries)}\n'
         return cal

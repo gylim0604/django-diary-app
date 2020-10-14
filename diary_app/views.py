@@ -58,6 +58,17 @@ class EntryListView(generic.ListView):
         else:
             return Entry.objects.all().order_by('-entry_date')[:10]
 
+class EntryListDateView(generic.ListView):
+    model = Entry
+
+    def get_queryset(self):
+        date = self.kwargs['date']
+        #gets the date arguement, check if it exist, and filter the view if it exists
+        if date != None:
+            return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
+        else:
+            return Entry.objects.all().order_by('-entry_date')[:10]
+        
 class EntryDetailView(generic.DetailView):
     model = Entry
 
