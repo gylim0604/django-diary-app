@@ -31,8 +31,8 @@
                                 <li>Hi {{ user.username }}</li>
                                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
                             {% else %}
-                                
                                 <li><a href="{% url 'login' %}">Login</a></li>
+                                <li><a href="{% url 'signup' %}">Signup</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}

@@ -14,7 +14,7 @@ from django.contrib.auth.forms import UserCreationForm
 from tinymce.widgets import TinyMCE
 
 # imports from this project
-from diary_app.forms import EntryForm
+from diary_app.forms import EntryForm, EntryFormManual
 from diary_app.models import *
 from diary_app.utils import Calendar
 
@@ -23,8 +23,9 @@ def index(request):
     # handle POST request
     if request.method == 'POST':
         form = EntryForm(request.POST)
-        
+
         if form.is_valid():
+            print("Hi")
             print(form.cleaned_data.get('content'))
             title = form.cleaned_data['title']
             content = form.cleaned_data.get('content')
@@ -34,7 +35,7 @@ def index(request):
                 title=title,
                 content=content,
                 entry_date=entry_date,
-                author = request.user.id
+                author = request.user
             )
             entry.save()
             
@@ -67,7 +68,14 @@ class EntryListView(generic.ListView):
 
 class EntryCreateView(generic.CreateView):
     model = Entry
+    form_class = EntryFormManual
     template_name_suffix = '_create_form'
+
+    def form_valid(self, form):
+        article = form.save(commit=False)
+        article.author = self.request.user
+        #article.save()  # This is redundant, see comments.
+        return super(EntryCreateView, self).form_valid(form)
    
 class EntryDetailView(generic.DetailView):
     model = Entry
