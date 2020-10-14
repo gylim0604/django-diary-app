@@ -34,6 +34,7 @@ def index(request):
                 title=title,
                 content=content,
                 entry_date=entry_date,
+                author = request.user.id
             )
             entry.save()
             
@@ -48,29 +49,10 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
-def signup(request):
-    #if user is signed in
-    if request.user.is_authenticated:
-        return redirect("/")
-    # if is a post request
-    if request.method == 'POST':
-        form = UserCreationForm(request.POST)
-        # if valid form is provided
-        if form.is_valid():
-            form.save()
-            username= form.cleaned_data.get('username')
-            password = form.cleaned_data.get('password1')
-            #log user in and redirect to index
-            user = authenticate(username=username, password=password)
-            login(request, user)
-            return redirect('/')
-        else:
-            return render(request, 'auth/signup.html', {'form': form})
-    else:
-        form = UserCreationForm()
-        return render(request, 'auth/signup.html', {'form':form})
+
 
 # entry views
+# list view filters entry on date and author
 class EntryListView(generic.ListView):
     model = Entry
 
@@ -78,28 +60,15 @@ class EntryListView(generic.ListView):
         date = self.kwargs['date']
         #gets the date arguement, check if it exist, and filter the view if it exists
         if date != None:
-            return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
+            return Entry.objects.filter(author=self.request.user.id,entry_date__date = datetime.datetime.fromisoformat(date))
         else:
             return Entry.objects.all().order_by('-entry_date')[:10]
-
-# class EntryListDateView(generic.ListView):
-#     model = Entry
-
-#     def get_queryset(self):
-#         date = self.kwargs['date']
-#         #gets the date arguement, check if it exist, and filter the view if it exists
-#         if date != None:
-#             return Entry.objects.filter(entry_date__date = datetime.datetime.fromisoformat(date))
-#         else:
-#             return Entry.objects.all().order_by('-entry_date')[:10]
 
 
 class EntryCreateView(generic.CreateView):
     model = Entry
-    form_class = EntryForm
     template_name_suffix = '_create_form'
-
-        
+   
 class EntryDetailView(generic.DetailView):
     model = Entry
 
@@ -119,7 +88,7 @@ class CalendarView(generic.ListView):
 
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(self.request.user,withyear=True)
         context['calendar'] = mark_safe(html_cal)
 
 

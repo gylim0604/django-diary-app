@@ -25,12 +25,14 @@
                             <li><a href="{% url 'index' %}">Home</a></li>
                             <li><a href="">All entries</a></li>
                             <li><a href="{% url 'calendar' %}">Calendar</a></li>
-
+                            <br><hr>
                             {% if user.is_authenticated %}
-                                <br><hr>
+                                
                                 <li>Hi {{ user.username }}</li>
+                                <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
                             {% else %}
-                                <li>Login</li>
+                                
+                                <li><a href="{% url 'login' %}">Login</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}

@@ -9,7 +9,7 @@ class EntryForm(forms.ModelForm):
     entry_date = forms.DateTimeField(initial=datetime.now())
     class Meta:
         model = Entry
-        fields = '__all__'
+        fields = ['title','content', 'entry_date']
 
     def clean_title(self):
         data = self.cleaned_data['title']

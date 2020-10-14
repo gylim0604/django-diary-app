@@ -1,12 +1,10 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 
 urlpatterns =[
-
     path('', views.index, name = 'index'),
     path('index',views.index,name="index"),
-    path('register', views.signup, name="register"),
     path('entries/<slug:date>', views.EntryListView.as_view(), name="entries"),
     path('create_entry', views.EntryCreateView.as_view(), name="entry-create"),
     path('entry/<int:pk>', views.EntryDetailView.as_view(), name="entry-detail"),
