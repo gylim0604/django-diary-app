@@ -73,6 +73,7 @@ class EntryCreateView(LoginRequiredMixin,generic.CreateView):
     template_name_suffix = '_create_form'
 
     def form_valid(self, form):
+        print("is_valid")
         article = form.save(commit=False)
         article.author = self.request.user
         return super(EntryCreateView, self).form_valid(form)
