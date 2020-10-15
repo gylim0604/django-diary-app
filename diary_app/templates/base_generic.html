@@ -23,16 +23,11 @@
                     {% block sidebar %}
                         <ul class="sidebar-nav">
                             <li><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="">All entries</a></li>
                             <li><a href="{% url 'calendar' %}">Calendar</a></li>
                             <br><hr>
                             {% if user.is_authenticated %}
-                                
                                 <li>Hi {{ user.username }}</li>
                                 <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
-                            {% else %}
-                                <li><a href="{% url 'login' %}">Login</a></li>
-                                <li><a href="{% url 'signup' %}">Signup</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}
