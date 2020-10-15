@@ -1,5 +1,6 @@
 import datetime
 import calendar
+import pytz
 
 from django.shortcuts import render, redirect
 from django.views import generic
@@ -23,15 +24,13 @@ def index(request):
     # handle POST request
     if request.method == 'POST':
         form = EntryForm(request.POST)
-
         if form.is_valid():
-            print("Hi")
             print(form.cleaned_data.get('content'))
             title = form.cleaned_data['title']
             content = form.cleaned_data.get('content')
             
             #timezone to be stored in utc so should'nt change it here. instead should change when displaying
-            entry_date = datetime.datetime.now()
+            entry_date = datetime.datetime.now(pytz.utc)
             entry = Entry.objects.create(
                 title=title,
                 content=content,
