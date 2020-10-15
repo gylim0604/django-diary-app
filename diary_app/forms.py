@@ -19,11 +19,13 @@ class EntryForm(forms.ModelForm):
     def clean_content(self):
         data = self.cleaned_data['content']
         return data
-
+    
+# Need to modify so that it only takes the time, date will be merged 
 class EntryFormManual(forms.ModelForm):
     title = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'special', 'size': '40'}))
     content = forms.CharField(label="",widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-    entry_date = forms.DateTimeField(initial=datetime.now())
+    entry_date = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}))
+    entry_time = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'time'}))
 
     class Meta:
         model = Entry

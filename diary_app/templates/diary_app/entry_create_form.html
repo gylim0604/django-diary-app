@@ -11,14 +11,16 @@
         {% csrf_token %}
         <div class="form-group">
             <div class="row">
-                <div class="col-sm-9">
-                    <label for="{{ form.title.id_for_lable}}"><strong>Title</strong></label><br>
+                <div class="col-sm-8">
+                    <label for="{{ form.title.id_for_label}}"><strong>Title</strong></label><br>
                     {{ form.title }}
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <br>
-                    <label for="{{ form.entry_date.id_for_lable }}">Date: </label>
+                    <label for="{{ form.entry_date.id_for_label }}">Date: </label>
                     {{ form.entry_date }}
+                    <label for="{{ form.entry_time.id_for_label}}">Time: </label>
+                    {{form.entry_time}}
                 </div>
             </div>            
         </div>

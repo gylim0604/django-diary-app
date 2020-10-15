@@ -29,6 +29,7 @@ def index(request):
             print(form.cleaned_data.get('content'))
             title = form.cleaned_data['title']
             content = form.cleaned_data.get('content')
+            
             #timezone to be stored in utc so should'nt change it here. instead should change when displaying
             entry_date = datetime.datetime.now()
             entry = Entry.objects.create(
@@ -65,7 +66,7 @@ class EntryListView(generic.ListView):
         else:
             return Entry.objects.all().order_by('-entry_date')[:10]
 
-
+# need to take a date parameter to determine the date of the entry
 class EntryCreateView(generic.CreateView):
     model = Entry
     form_class = EntryFormManual
@@ -74,7 +75,6 @@ class EntryCreateView(generic.CreateView):
     def form_valid(self, form):
         article = form.save(commit=False)
         article.author = self.request.user
-        #article.save()  # This is redundant, see comments.
         return super(EntryCreateView, self).form_valid(form)
    
 class EntryDetailView(generic.DetailView):
