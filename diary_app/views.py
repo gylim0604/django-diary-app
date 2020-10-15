@@ -8,7 +8,7 @@ from django.http import HttpResponse
 from django.utils.safestring import mark_safe
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
-
+from django.contrib.auth.decorators import login_required
 
 #tinymce import
 from tinymce.widgets import TinyMCE
@@ -18,7 +18,7 @@ from diary_app.forms import EntryForm, EntryFormManual
 from diary_app.models import *
 from diary_app.utils import Calendar
 
-
+@login_required
 def index(request):
     # handle POST request
     if request.method == 'POST':
@@ -51,11 +51,11 @@ def index(request):
 
     return render(request, 'index.html', context=context)
 
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # entry views
 # list view filters entry on date and author
-class EntryListView(generic.ListView):
+class EntryListView(LoginRequiredMixin,generic.ListView):
     model = Entry
 
     def get_queryset(self):
@@ -67,7 +67,7 @@ class EntryListView(generic.ListView):
             return Entry.objects.all().order_by('-entry_date')[:10]
 
 # need to take a date parameter to determine the date of the entry
-class EntryCreateView(generic.CreateView):
+class EntryCreateView(LoginRequiredMixin,generic.CreateView):
     model = Entry
     form_class = EntryFormManual
     template_name_suffix = '_create_form'
@@ -86,7 +86,7 @@ class EntryUpdateView(generic.UpdateView):
     template_name_suffix = '_update_form'
 
 # calendar view
-class CalendarView(generic.ListView):
+class CalendarView(LoginRequiredMixin,generic.ListView):
     model = Entry
     template_name = 'diary_app/calendar.html'
 

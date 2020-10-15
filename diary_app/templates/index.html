@@ -6,8 +6,7 @@
 {% endblock %}
 
 {% block content %}
-    <h1>My Diary App</h1>
-    {% if user %} 
+    {% if user.is_authenticated %} 
         <h4>Hi {{user}}!</h4>
     {% endif %}
     <p>Welcome to your safe space. Write anything to your hearts content and let it all out.</p>
