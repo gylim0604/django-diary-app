@@ -19,16 +19,17 @@ class EntryForm(forms.ModelForm):
         data = self.cleaned_data['content']
         return data
     
+
+from django.contrib.admin import widgets
 # Need to modify so that it only takes the time, date will be merged 
 class EntryFormManual(forms.ModelForm):
     title = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'special', 'size': '40'}))
     content = forms.CharField(label="",widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
-    entry_date = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'date'}))
-    entry_time = forms.DateTimeField(widget=forms.DateInput(attrs={'type': 'time'}))
-
+    #NEED TO add the time field to the form
+    # entry_time = forms.DateTimeField(widget= forms.TimeInput(attrs={'type': 'time'}))
     class Meta:
         model = Entry
-        fields = ['title','content','entry_date']
+        fields = ['title','content','entry_time']
 
     def clean_title(self):
         data = self.cleaned_data['title']

@@ -1,7 +1,8 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-    <h1>Entry List</h1>
+    <h3>Entry List - {{test}}</h3>
+    
     {% if entry_list %}
         <ul>
             {% for entry in entry_list %}
@@ -14,7 +15,7 @@
         <p>There are no entries yet.. </p> 
         <!-- add link to homepage -->
     {% endif %}
-    <a class="btn btn-info" href="{% url 'entry-create' %}">
+    <a class="btn btn-info" href="{% url 'entry-create'  %}?date={{view.kwargs.date}}">
         New Entry
     </a>
 {% endblock %}

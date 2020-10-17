@@ -57,6 +57,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class EntryListView(LoginRequiredMixin,generic.ListView):
     model = Entry
 
+    def get_context_data(self, **kwargs):
+        context = super(EntryListView, self).get_context_data(**kwargs)
+        #should rename date to something else
+        context['test'] = datetime.date.fromisoformat(self.kwargs['date'])
+        return context
+
     def get_queryset(self):
         date = self.kwargs['date']
         #gets the date arguement, check if it exist, and filter the view if it exists
@@ -71,9 +77,16 @@ class EntryCreateView(LoginRequiredMixin,generic.CreateView):
     form_class = EntryFormManual
     template_name_suffix = '_create_form'
 
+    def get_context_data(self, **kwargs):
+        context = super(EntryCreateView, self).get_context_data(**kwargs)
+        #should rename date to something else
+        context['date'] = self.request.GET.get('date', None)
+        return context
+
     def form_valid(self, form):
-        print("is_valid")
         article = form.save(commit=False)
+        date = datetime.datetime.strptime(self.request.GET.get('date',None),"%Y-%m-%d")
+        article.entry_date = date
         article.author = self.request.user
         return super(EntryCreateView, self).form_valid(form)
    
