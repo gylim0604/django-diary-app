@@ -26,7 +26,8 @@ class EntryFormManual(forms.ModelForm):
     title = forms.CharField(max_length=100,widget=forms.TextInput(attrs={'class':'special', 'size': '40'}))
     content = forms.CharField(label="",widget=TinyMCE(attrs={'cols': 80, 'rows': 30}))
     #NEED TO add the time field to the form
-    # entry_time = forms.DateTimeField(widget= forms.TimeInput(attrs={'type': 'time'}))
+    entry_time = forms.TimeField(widget= forms.TimeInput(attrs={'type': 'time'}))
+    
     class Meta:
         model = Entry
         fields = ['title','content','entry_time']
@@ -37,6 +38,11 @@ class EntryFormManual(forms.ModelForm):
     
     def clean_content(self):
         data = self.cleaned_data['content']
+        return data
+
+    def clean_entry_time(self):
+        data = self.data.get('entry_time')
+        print("clean: " +data)
         return data
 
 

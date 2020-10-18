@@ -7,6 +7,9 @@
 
 
 {% block content %}
+    {% for error_field, error_message in form.errors.items %}
+        {{ error_field|striptags }}: {{ error_message|striptags }}
+    {% endfor %}
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
@@ -17,8 +20,7 @@
                 </div>
                 <div class="col-sm-4">
                     <br>
-                    <p>Date: {{date}}</p>
-                    <p>Time:</p> {{form.entry_time}}
+                    <p>Date: {{date}}  Time:{{form.entry_time}}</p> 
                 </div>
             </div>            
         </div>

@@ -85,8 +85,11 @@ class EntryCreateView(LoginRequiredMixin,generic.CreateView):
 
     def form_valid(self, form):
         article = form.save(commit=False)
+        # get the date from the GET request and time from POST and combine into a datetime object
         date = datetime.datetime.strptime(self.request.GET.get('date',None),"%Y-%m-%d")
-        article.entry_date = date
+        time = datetime.datetime.strptime(form.clean_entry_time(), '%H:%M').time()
+        article.entry_date = datetime.datetime.combine(date,time )
+        # set the article author to current user
         article.author = self.request.user
         return super(EntryCreateView, self).form_valid(form)
    
