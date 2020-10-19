@@ -5,14 +5,17 @@
         {% block title %}
             <title>{% if user.is_authenticated %} {{user}}'s Diary {% else %} My diary {% endif %}</title>
         {% endblock %}
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-        {% block scripts %}
+       
+        {% block meta %}
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
         {% endblock %}
-        {% load static %}
-        <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-        <script type="text/javascript" src ="{% static 'js/script.js' %}"></script>
+        
+        {% block css %}
+            {% load static %}
+            <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+        {% endblock %}
     </head>
     {% endblock %}
 

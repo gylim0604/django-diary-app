@@ -12,7 +12,7 @@
 }
   
 .calendar tr, .calendar td {
-  border: 1px solid black;
+  border: 2px solid grey;
 }
 
 .calendar th {
@@ -29,6 +29,7 @@
 
 .month {
   font-size: 25px;
+  background-color: red;
 }
 
 .date {
@@ -54,13 +55,18 @@ ul {
   float: right;
 }
 
-.btn {
-  outline: none;
-  color: black;
-  background-color: transparent;
-  box-shadow: 0 0 0 0;
-}
 
 .clearfix {
   margin: 15px;
+}
+.login-content{
+  padding-top:5%;
+}
+
+.btn-group{
+  padding-left: 10%;
+}
+
+.form-links{
+  padding: 1.5% 0 0 5% ;
 }
