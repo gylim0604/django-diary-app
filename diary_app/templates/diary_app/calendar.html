@@ -1,10 +1,17 @@
 {% extends 'base_generic.html' %}
 
+{% block css %}
+    {{block.super}}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/calendar.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="clearfix">
-    <a class="btn btn-primary left" href="{% url 'calendar' %}?{{prev_month}}">Previous</a>
-    <a class="btn btn-primary right" href="{% url 'calendar' %}?{{next_month}}">Next</a>
+    <a class="btn left btn-color" href="{% url 'calendar' %}?{{prev_month}}">Previous</a>
+    <a class="btn right btn-color" href="{% url 'calendar' %}?{{next_month}}">Next</a>
 </div>
-
+   
 {{ calendar }}
 {% endblock %}

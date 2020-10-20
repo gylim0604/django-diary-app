@@ -20,30 +20,36 @@
     {% endblock %}
 
     <body>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-2">
+        <div class="container-fluid main-container">
+            <div class="row main-header">
+                <h1>My Diary App</h1>
+            </div>
+            <div class="row content-container">
+                <div class="col-sm-2 sidebar-container">
                     {% block sidebar %}
                         <ul class="sidebar-nav">
-                            <li><a href="{% url 'index' %}">Home</a></li>
-                            <li><a href="{% url 'calendar' %}">Calendar</a></li>
+                            <li><a class="link" href="{% url 'index' %}">Home</a></li>
+                            <li><a class="link" href="{% url 'calendar' %}">Calendar</a></li>
                             <br><hr>
                             {% if user.is_authenticated %}
-                                <li>Hi {{ user.username }}</li>
-                                <li><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+                                <!-- <li>Hi {{ user.username }}</li> -->
+                                <li><a class="link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
                             {% endif %}
                         </ul>
                     {% endblock %}
                 </div>
                 <div class="col-sm-10">
-                    <div class="row"  style="background-color: aquamarine; border: bisque 1px solid;">
-                        <h1>My Diary App</h1>
-                    </div>
-                    <div>
+                    <div class="content-container">
                         {% block content%}{% endblock %}
                     </div>
                 </div>
             </div>
+            <!-- <div class="row footer-container">
+                <footer>
+                    <p style="margin-bottom: 0px;">Guang Lim</p>
+                    <p><a href="mailto:gylim0604@gmail.com">gylim0604@gmail.com</a></p>
+                  </footer> 
+            </div> -->
         </div>
     </body>
 </html>

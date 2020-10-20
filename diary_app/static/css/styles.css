@@ -1,71 +1,78 @@
+*{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+html, body{min-height:100%;}
+
+body{
+  height:100vh;
+  background-color:hsl(197, 37%, 24%) !important;
+}
+
 .sidebar-nav{
-    margin-top:20px;
-    padding:0;
-    list-style: none;
-}
-
-/* Calendar styling */
-.calendar {
-    width: 98%;
-    margin: auto;
-    font-size: 13px;
-}
-  
-.calendar tr, .calendar td {
-  border: 2px solid grey;
-}
-
-.calendar th {
-  padding: 10px;
-  text-align: center;
-  font-size: 18px;
-}
-
-.calendar td {
-  width: 200px;
-  height: 150px;
-  padding: 20px 0px 0px 5px;
-}
-
-.month {
-  font-size: 25px;
-  background-color: red;
-}
-
-.date {
-  font-size: 16px;
-}
-
-ul {
-  height: 100%;
-  padding: 0px 5px 0px 20px;
-}
-
-.calendar a {
-  color: grey;
-  text-decoration: none !important;
+  margin-top:20px;
+  list-style: none;
 }
 
 
-.left {
-  float: left;
+.link{
+  color:#f4a261;
 }
 
-.right {
-  float: right;
+.link:hover{
+  color:#e9c46a;
+}
+
+hr{
+  height: 1px;
+  background-color: #e76f51;
+  border: none;
 }
 
 
-.clearfix {
-  margin: 15px;
+.main-header{
+  padding:  1.4% 0px .5% 1.4%;
+  background-color:#e76f51;
+  color: hsl(197, 37%, 24%);
 }
+
+.main-container{
+  background-color:hsl(197, 37%, 24%);
+  color: #f4a261;
+
+}
+.sidebar-container{
+  border-right: #e76f51  2px solid;
+}
+@media only screen and (max-width: 728px) {
+  .sidebar-container{
+    border-right: none;
+  }
+}
+
+.content-container{
+  background-color:hsl(197, 37%, 24%);
+  padding: 1.5% 0 1.5% 1.5%;
+}
+
+/* Overide bootstrap button primary */
+.btn-color{
+  background-color: #e76f51;
+  color: hsl(197, 37%, 24%);
+}
+.btn-color:hover{  
+  background-color: #f4a261;
+  color: #2a9d8f;
+}
+
+
 .login-content{
   padding-top:5%;
 }
-
 .btn-group{
   padding-left: 10%;
 }
+
 
 .form-links{
   padding: 1.5% 0 0 5% ;

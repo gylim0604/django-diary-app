@@ -7,7 +7,7 @@
         <ul>
             {% for entry in entry_list %}
                 <li>
-                    <a href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
+                    <a class="link" href="{{ entry.get_absolute_url }}">{{ entry.title }}</a>
                 </li>
             {% endfor %}
         </ul>
@@ -15,7 +15,7 @@
         <p>There are no entries yet.. </p> 
         <!-- add link to homepage -->
     {% endif %}
-    <a class="btn btn-info" href="{% url 'entry-create'  %}?date={{view.kwargs.date}}">
+    <a class="btn btn-color" href="{% url 'entry-create'  %}?date={{view.kwargs.date}}">
         New Entry
     </a>
 {% endblock %}

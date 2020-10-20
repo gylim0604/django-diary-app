@@ -39,15 +39,15 @@
   
         <div class="btn-group">
           <div class="col-sm-4">
-            <input class="btn btn-primary" type="submit" value="Login" /> 
+            <input class="btn btn-color" type="submit" value="Login" /> 
             <input type="hidden" name="next" value="{{ next }}" />
           </div>
           <div class="col-sm-4">
-            <a class="btn btn-primary" href="{% url 'signup' %}">Sign Up</a>
+            <a class="btn btn-color" href="{% url 'signup' %}">Sign Up</a>
           </div>
         </div>
         <div class="form-group form-links">
-          <p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+          <p><a class="link" href="{% url 'password_reset' %}">Lost password?</a></p>
         </div>
   
       </form>  

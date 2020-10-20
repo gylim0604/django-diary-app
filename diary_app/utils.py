@@ -13,7 +13,7 @@ class Calendar(HTMLCalendar):
 
     # formats entries of a day into a table 
     def formatday(self, s, day, entries):
-        entries_per_day = entries.filter(entry_date__day = day)
+        entries_per_day = entries.filter(entry_date__day = day)[:2]
         d = ''
         for entry in entries_per_day:
             title = entry.title if len(entry.title) < 30 else entry.title[:27] + "..."
@@ -23,7 +23,10 @@ class Calendar(HTMLCalendar):
         s += "-%02d" %(day)
 
         if day != 0:
-            return f'<td> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
+            if s == datetime.today().strftime('%Y-%m-%d'):
+                 return f'<td class="today"> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
+            else:
+                return f'<td> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
         return '<td></td>'
     
     # format the week in a table row
