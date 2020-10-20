@@ -1,7 +1,10 @@
 from django.shortcuts import render
 from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login as auth_login
+from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views import generic
+from .forms import UserLoginForm
 
 # Create your views here.
 class SignUpView(generic.CreateView):
@@ -9,24 +12,15 @@ class SignUpView(generic.CreateView):
     success_url = reverse_lazy('login')
     template_name = 'registration/signup.html'
 
-    # def signup(request):
-    # #if user is signed in
-    # if request.user.is_authenticated:
-    #     return redirect("/")
-    # # if is a post request
-    # if request.method == 'POST':
-    #     form = UserCreationForm(request.POST)
-    #     # if valid form is provided
-    #     if form.is_valid():
-    #         form.save()
-    #         username= form.cleaned_data.get('username')
-    #         password = form.cleaned_data.get('password1')
-    #         #log user in and redirect to index
-    #         user = authenticate(username=username, password=password)
-    #         login(request, user)
-    #         return redirect('/')
-    #     else:
-    #         return render(request, 'auth/signup.html', {'form': form})
-    # else:
-    #     form = UserCreationForm()
-    #     return render(request, 'auth/signup.html', {'form':form})
+class UpdatedLoginView(LoginView):
+    form_class = UserLoginForm
+
+    def form_valid(self, form):
+        remember_me = form.cleaned_data.get('remember_me')
+
+        if not remember_me:
+            self.request.session.set_expiry(0)
+            self.request.session.modified=True
+        return super(UpdatedLoginView, self).form_valid(form)
+
+

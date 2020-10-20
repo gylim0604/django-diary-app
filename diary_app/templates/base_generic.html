@@ -25,12 +25,13 @@
                 <h1>My Diary App</h1>
             </div>
             <div class="row content-container">
+                {% if user.is_authenticated %}
                 <div class="col-sm-2 sidebar-container">
                     {% block sidebar %}
                         <ul class="sidebar-nav">
                             <li><a class="link" href="{% url 'index' %}">Home</a></li>
                             <li><a class="link" href="{% url 'calendar' %}">Calendar</a></li>
-                            <br><hr>
+                            <hr class="sidebar-line">
                             {% if user.is_authenticated %}
                                 <!-- <li>Hi {{ user.username }}</li> -->
                                 <li><a class="link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
@@ -38,6 +39,7 @@
                         </ul>
                     {% endblock %}
                 </div>
+                {% endif %}
                 <div class="col-sm-10">
                     <div class="content-container">
                         {% block content%}{% endblock %}
