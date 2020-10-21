@@ -18,6 +18,7 @@ from tinymce.widgets import TinyMCE
 from diary_app.forms import EntryForm, EntryFormManual
 from diary_app.models import *
 from diary_app.utils import Calendar
+import diary_app.services as service
 
 @login_required
 def index(request):
@@ -46,6 +47,7 @@ def index(request):
     context = {
         'form': form,
         'num_entries': num_entries,
+        'quote': service.get_quote()
     }
 
     return render(request, 'index.html', context=context)

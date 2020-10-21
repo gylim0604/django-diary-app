@@ -7,10 +7,10 @@
 
 {% block content %}
     {% if user.is_authenticated %} 
-        <h4>Hi {{user}}!</h4>
+        <h3>Hi {{user}}!</h3>
     {% endif %}
-    <p>Welcome to your safe space. Write anything to your hearts content and let it all out.</p>
-
+    <p style="font-size: 1.5rem">Welcome to your safe space. Write anything to your hearts content and let it all out.</p>
+    <p style="font-size: 0.75rem; text-align: center;">{{quote |linebreaks}}</p>
     <form method="post">
         {% csrf_token %}
         <div class="form-group">
