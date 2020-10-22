@@ -25,9 +25,9 @@ class Calendar(HTMLCalendar):
 
         if day != 0:
             if s == datetime.today().strftime('%Y-%m-%d'):
-                 return f'<td class="today"> <a href="{ reverse("entries", args={s}) } "> <div class="date">{day}</div> <div class="event"><ul> {d} </ul></div> </a> </td>'
+                 return f'<td class="today"> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul class="event"> {d} </ul></a> </td>'
             else:
-                return f'<td class="day"> <a href="{ reverse("entries", args={s}) } "> <div class="date">{day}</div> <div class="event"><ul> {d} </ul></div> </a> </td>'
+                return f'<td class="day"> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul class="event"> {d} </ul> </a> </td>'
         return '<td class="other-month" ></td>'
     
     # format the week in a table row
@@ -41,9 +41,16 @@ class Calendar(HTMLCalendar):
         entries = Entry.objects.filter( author=user.id,entry_date__year=self.year, entry_date__month=self.month)
         cal = f'<table border="0" cellpadding="0" cellspacing="0" class="calendar">\n'
         cal += f'{self.formatmonthname(self.year, self.month, withyear=withyear)}\n'
-        cal += f'{self.formatweekheader()}\n'
+        cal += f'{self.customformatweekheader()}\n'
 
         for week in self.monthdays2calendar(self.year,self.month):
             s = str(self.year) + "-" + str(self.month)
             cal += f'{self.formatweek(s,week, entries)}\n'
         return cal
+
+    def customformatweekheader(self):
+        s = self.formatweekheader()
+        arr = s.split('>',1)
+        s = arr[0] + " class=weekdays >" + arr[1]
+        print(s)
+        return s
