@@ -16,6 +16,7 @@ class Calendar(HTMLCalendar):
         entries_per_day = entries.filter(entry_date__day = day)[:2]
         d = ''
         for entry in entries_per_day:
+            # format title to not overflow, might be redundant
             title = entry.title if len(entry.title) < 30 else entry.title[:27] + "..."
             d += f'<li>{title}</li>'
 
@@ -24,17 +25,17 @@ class Calendar(HTMLCalendar):
 
         if day != 0:
             if s == datetime.today().strftime('%Y-%m-%d'):
-                 return f'<td class="today"> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
+                 return f'<td class="today"> <a href="{ reverse("entries", args={s}) } "> <div class="date">{day}</div> <div class="event"><ul> {d} </ul></div> </a> </td>'
             else:
-                return f'<td> <a href="{ reverse("entries", args={s}) } "> <span class="date">{day}</span> <ul> {d} </ul> </a> </td>'
-        return '<td></td>'
+                return f'<td class="day"> <a href="{ reverse("entries", args={s}) } "> <div class="date">{day}</div> <div class="event"><ul> {d} </ul></div> </a> </td>'
+        return '<td class="other-month" ></td>'
     
     # format the week in a table row
     def formatweek(self, s, theweek, entries):
         week = ''
         for d, weekday in theweek:
             week += self.formatday(s,d, entries)
-        return f'<tr> {week} </tr>'
+        return f'<tr class="week"> {week} </tr>'
     
     def formatmonth(self,user, withyear=True):
         entries = Entry.objects.filter( author=user.id,entry_date__year=self.year, entry_date__month=self.month)

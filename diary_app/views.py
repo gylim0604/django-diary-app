@@ -141,3 +141,4 @@ def get_date(req_day):
         year, month = (int(x) for x in req_day.split('-'))
         return datetime.date(year, month, day=1)
     return datetime.date.today()
+

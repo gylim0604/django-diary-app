@@ -1,12 +1,8 @@
 /* Calendar styling */
 .calendar {
-    width: 100%;
-    max-height: 100%;
-    font-size: 10px;
-}
-  
-.calendar tr, .calendar td {
-  border: 2px solid #2a9d8f;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar th {
@@ -15,12 +11,38 @@
   font-size: 18px;
 }
 
-.calendar td {
-  max-width: 5%;
-  height: 5vh;
-  padding: .5% 0px 0px .5%;
+.calendar tr, .calendar tbody {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+ width: 100%;
 }
 
+.calendar td{
+	padding: 5px;
+	box-sizing:border-box;
+	border: 1px solid #2a9d8f;
+}
+.calendar td {
+	min-height: 180px;
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar .days li:hover {
+	background: #d3d3d3;
+}
+
+.calendar .event {
+  flex: 0 0 auto;
+	font-size: 13px;
+	border-radius: 4px;
+	padding: 5px;
+	margin-bottom: 5px;
+	line-height: 14px;
+  text-decoration: none;
+  display: block;
+}
 .month {
   font-size: 25px;
   background-color:#2a9d8f;
@@ -64,3 +86,30 @@ ul {
 }
 
 
+@media(max-width: 768px) {
+
+  .mon, .tue, .wed, .thu, .fri, .sat,.sun{
+		display: none;
+  }
+  .other-month{
+    display: none !important;
+  }
+	.calendar li {
+		height: auto !important;
+		width: 100%;
+		padding: 10px;
+		margin-bottom: -1px;
+	}
+  
+  .calendar, .calendar tr, .calendar tbody {
+    grid-template-columns: 1fr;
+  }
+  
+  .calendar  tr {
+    grid-column: 1 / 2;
+  }
+
+	.calendar .date {
+		align-self: flex-start;
+	}
+}
