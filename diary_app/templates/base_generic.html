@@ -32,10 +32,9 @@
                             <li><a class="link" href="{% url 'index' %}">Home</a></li>
                             <li><a class="link" href="{% url 'calendar' %}">Calendar</a></li>
                             <hr class="sidebar-line">
-                            {% if user.is_authenticated %}
                                 <!-- <li>Hi {{ user.username }}</li> -->
-                                <li><a class="link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
-                            {% endif %}
+                            <li><a class="link" href="{% url 'user-detail' pk=user.id %}"> {{user.username }}'s profile </a></li>
+                            <li><a class="link" href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
                         </ul>
                     {% endblock %}
                 </div>

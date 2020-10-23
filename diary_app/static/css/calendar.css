@@ -98,10 +98,15 @@
   .other-month{
     display: none !important;
   }
+  
+  .calendar ul{
+    font-size: 20px;
+  }
 	.calendar li {
 		height: auto !important;
 		width: 100%;
-		margin-bottom: -1px;
+    margin-bottom: -1px;
+    font-size: 20px;
 	}
   
   .calendar, .calendar tr, .calendar tbody {
