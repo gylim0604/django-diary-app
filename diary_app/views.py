@@ -26,7 +26,6 @@ def index(request):
     if request.method == 'POST':
         form = EntryForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data.get('content'))
             title = form.cleaned_data['title']
             content = form.cleaned_data.get('content')
             
@@ -95,13 +94,22 @@ class EntryCreateView(LoginRequiredMixin,generic.CreateView):
         article.author = self.request.user
         return super(EntryCreateView, self).form_valid(form)
    
-class EntryDetailView(generic.DetailView):
+class EntryDetailView(LoginRequiredMixin,generic.DetailView):
     model = Entry
 
-class EntryUpdateView(generic.UpdateView):
+class EntryUpdateView(LoginRequiredMixin,generic.UpdateView):
     model = Entry
     form_class = EntryForm
     template_name_suffix = '_update_form'
+
+class UserDetailView(LoginRequiredMixin,generic.DetailView):
+    model = User
+    template_name="diary_app/user_detail.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserDetailView, self).get_context_data(**kwargs)
+        context['num_entries'] = Entry.objects.filter(author=self.request.user.id).count()
+        return context
 
 # calendar view
 class CalendarView(LoginRequiredMixin,generic.ListView):

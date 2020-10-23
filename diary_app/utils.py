@@ -52,5 +52,4 @@ class Calendar(HTMLCalendar):
         s = self.formatweekheader()
         arr = s.split('>',1)
         s = arr[0] + " class=weekdays >" + arr[1]
-        print(s)
         return s

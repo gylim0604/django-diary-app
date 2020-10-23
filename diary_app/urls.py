@@ -10,5 +10,6 @@ urlpatterns =[
     path('create_entry', views.EntryCreateView.as_view(), kwargs={'date': None}, name="entry-create"),
     path('entry/<int:pk>', views.EntryDetailView.as_view(), name="entry-detail"),
     path('entry/<int:pk>/update', views.EntryUpdateView.as_view(), name="entry-update"),
-    path('calendar/',views.CalendarView.as_view(), name='calendar')
+    path('user/<int:pk>', views.UserDetailView.as_view(), name="user-detail"),
+    path('calendar/',views.CalendarView.as_view(), name='calendar'),
 ]
