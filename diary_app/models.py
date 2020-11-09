@@ -18,4 +18,3 @@ class Entry(models.Model):
     def get_absolute_url(self):
         return reverse('entry-detail', args=[str(self.id)])
 
-
