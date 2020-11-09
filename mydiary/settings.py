@@ -114,8 +114,7 @@ LOGIN_URL ='/accounts/login'
 #Whitenoise for static files
 WHITENOISE_USE_FINDERS = True
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
