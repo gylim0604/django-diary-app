@@ -69,7 +69,7 @@ class EntryListView(LoginRequiredMixin,generic.ListView):
         date = self.kwargs['date']
         #gets the date arguement, check if it exist, and filter the view if it exists
         if date != None:
-            return Entry.objects.filter(author=self.request.user.id,entry_date__date = datetime.date.fromisoformat(date))
+            return Entry.objects.filter(author=self.request.user.id,entry_date__date = datetime.datetime.fromisoformat(date))
         else:
             return Entry.objects.all().order_by('-entry_date')[:10]
 
